@@ -4,11 +4,14 @@
   "description": "A Node.js app with Express and PostgreSQL integration",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "build": "netlify deploy --prod",
+    "start": "node netlify/functions/api.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "serverless-http": "^3.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
