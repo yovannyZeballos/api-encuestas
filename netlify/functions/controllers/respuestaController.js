@@ -1,16 +1,28 @@
-const respuestaModel = require('../models/respuestaModel');
+const Respuesta = require('../models/respuesta');
+const RespuestaDetalle = require('../models/respuestaDetalle');
+const sequelize = require('../config/config'); 
 
 class RespuestaController {
 
     async create(req, res) {
-    try {
-        const result = await respuestaModel.create(req.body);
-        res.status(201).json(result);
-    } catch (error) {
-        console.error('Error creating respuesta:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        const { detalles, ...respuestaData } = req.body;
+        const t = await sequelize.transaction();
+        try {
+
+            respuestaData.fecha = new Date();
+            const respuesta = await Respuesta.create(respuestaData, { transaction: t });
+            const detallesPromesas = detalles.map(detalle => 
+                RespuestaDetalle.create({ ...detalle, idRespuesta: respuesta.id }, { transaction: t })
+            );
+            await Promise.all(detallesPromesas);
+            await t.commit();
+            res.status(201).json(respuesta);
+        } catch (error) {
+            await t.rollback();
+            console.error('Error creating respuesta with details:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
     }
-}
 }
 
 module.exports = new RespuestaController();
