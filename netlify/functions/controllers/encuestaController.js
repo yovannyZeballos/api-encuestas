@@ -27,13 +27,13 @@ class EncuestaController {
                 where: { id },
                 include: [{
                     model: Pagina,
-                    as: 'paginas',
+                    as: 'pagina',
                     include: [{
                         model: Pregunta,
                         as: 'preguntas',
                         include: [{
                             model: Opcion,
-                            as: 'opciones'
+                            as: 'opcion'
                         }]
                     }]
                 }]
@@ -43,17 +43,19 @@ class EncuestaController {
                 return res.status(404).send({ message: 'Encuesta no encontrado' });
             }
 
-            const { titulo, paginas, estado, preguntasAleatorias, opcionesAleatorias } = encuesta;
+            const { titulo, pagina, estado, preguntasAleatorias, opcionesAleatorias } = encuesta;
 
-            const paginasDto = paginas.map(({ titulo, descripcion, preguntas }) => ({
+            console.log(encuesta.pagina[0].preguntas);
+
+            const paginasDto = pagina.map(({ titulo, descripcion, preguntas }) => ({
                 titulo,
                 descripcion,
-                preguntas: preguntas.map(({ id, descripcion, multipleRespuestas, numero, opciones }) => ({
+                preguntas: preguntas.map(({ id, descripcion, multipleRespuestas, numero, opcion }) => ({
                     id,
                     descripcion,
                     multipleRespuestas,
                     numero,
-                    opciones: opciones.map(({ id, descripcion }) => ({ id, descripcion }))
+                    opciones: opcion.map(({ id, descripcion }) => ({ id, descripcion }))
                 }))
             }));
 

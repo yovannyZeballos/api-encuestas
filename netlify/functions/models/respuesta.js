@@ -33,8 +33,10 @@ Respuesta.init({
   },
 }, {
   sequelize: dbConnection,
-  modelName: 'respuestas',
+  modelName: 'Respuesta',
+  tableName: 'respuestas',
   timestamps: false, // Ajusta según si tu tabla maneja o no timestamps (createdAt, updatedAt)
 });
+
 
 module.exports = Respuesta;

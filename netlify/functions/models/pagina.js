@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require('sequelize');
 const dbConnection = require('../config/config'); // Ajusta la ruta según sea necesario
-const Pregunta = require('./pregunta');
 const Encuesta = require('./encuesta');
 
 class Pagina extends Model {}
@@ -15,7 +14,7 @@ Pagina.init({
     type: DataTypes.STRING(10),
     allowNull: false,
     references: {
-      model: 'encuestas', // Nombre del modelo referenciado
+      model: Encuesta, // Nombre del modelo referenciado
       key: 'id', // Clave en el modelo referenciado
     },
   },
@@ -29,11 +28,12 @@ Pagina.init({
   },
 }, {
   sequelize: dbConnection,
-  modelName: 'paginas',
+  modelName: 'Pagina',
+  tableName: 'paginas',
   timestamps: false
 });
 
-Pagina.belongsTo(Encuesta, { foreignKey: 'idEncuesta', as: 'encuestas' });
-Encuesta.hasMany(Pagina, { foreignKey: 'idEncuesta', as: 'paginas' });
+Pagina.belongsTo(Encuesta, { foreignKey: 'idEncuesta', as: 'encuesta' });
+Encuesta.hasMany(Pagina, { foreignKey: 'idEncuesta', as: 'pagina' });
 
 module.exports = Pagina;

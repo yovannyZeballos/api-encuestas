@@ -14,7 +14,7 @@ Pregunta.init({
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
-      model: 'paginas', // Nombre del modelo referenciado
+      model: Pagina, // Nombre del modelo referenciado
       key: 'id', // Clave en el modelo referenciado
     },
   },
@@ -32,12 +32,12 @@ Pregunta.init({
   },
 }, {
   sequelize: dbConnection,
-  modelName: 'preguntas',
+  modelName: 'Pregunta',
+  tableName: 'preguntas',
   timestamps: false,
 });
 
-Pagina.hasMany(Pregunta, { foreignKey: 'idPagina', as: 'preguntas' });
-Pregunta.belongsTo(Pagina, { foreignKey: 'idPagina', as: 'paginas' });
+
 
 
 module.exports = Pregunta;

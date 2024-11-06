@@ -17,7 +17,7 @@ RespuestaDetalle.init({
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'respuestas', // Nombre del modelo referenciado
+      model: Respuesta, // Nombre del modelo referenciado
       key: 'id', // Clave en el modelo referenciado
     },
   },
@@ -25,7 +25,7 @@ RespuestaDetalle.init({
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
-      model: 'preguntas', // Nombre del modelo referenciado
+      model: Pregunta, // Nombre del modelo referenciado
       key: 'id', // Clave en el modelo referenciado
     },
   },
@@ -33,19 +33,18 @@ RespuestaDetalle.init({
     type: DataTypes.INTEGER,
     allowNull: true,
     references: {
-      model: 'opciones', // Nombre del modelo referenciado
+      model: Opcion, // Nombre del modelo referenciado
       key: 'id', // Clave en el modelo referenciado
     },
   },
 }, {
   sequelize: dbConnection,
-  modelName: 'respuestaDetalle',
-  timestamps: false, // Ajusta según si tu tabla maneja o no timestamps
+  modelName: 'RespuestaDetalle',
+  tableName: 'respuestaDetalles',
+  timestamps: false // Ajusta según si tu tabla maneja o no timestamps
 });
 
 // Definir las relaciones
-RespuestaDetalle.belongsTo(Respuesta, { foreignKey: 'idRespuesta', as: 'respuestas' });
-RespuestaDetalle.belongsTo(Pregunta, { foreignKey: 'idPregunta', as: 'preguntas' });
-RespuestaDetalle.belongsTo(Opcion, { foreignKey: 'idOpcion', as: 'opciones' });
+
 
 module.exports = RespuestaDetalle;

@@ -11,26 +11,33 @@ const nivelCumplimientoRoutes = require('./routes/nivelCumplimientoRoutes');
 const encuestaRoutes = require('./routes/encuestaRoutes');
 const preguntaRoutes = require('./routes/preguntaRoutes');
 const respuestaRoutes = require('./routes/respuestaRoutes');
+const adminRoutes = require('./routes/adminRoute');
+const authRoutes = require('./routes/authRoute');
 const authMiddleware = require('./middlewares/authMiddleware');
+const jwtMiddleware = require('./middlewares/jwtMiddleware');
+
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
+apiRouter.use(cors());
 
 // Middleware
 app.use(express.json());
-app.use(authMiddleware);
+//app.use(authMiddleware);
 
 // Routes
-apiRouter.use('/', respuestaPoclacRoutes);
-apiRouter.use('/', rolRoutes);
-apiRouter.use('/', tribuRoutes);
-apiRouter.use('/', squadRoutes);
-apiRouter.use('/', squadRoutes);
-apiRouter.use('/', memberRoutes);
-apiRouter.use('/', nivelCumplimientoRoutes);
-apiRouter.use('/', encuestaRoutes);
-apiRouter.use('/', preguntaRoutes);
-apiRouter.use('/', respuestaRoutes);
+apiRouter.use('/respuesta-poclac', authMiddleware, respuestaPoclacRoutes);
+apiRouter.use('/rol', authMiddleware, rolRoutes);
+apiRouter.use('/tribu', authMiddleware, tribuRoutes);
+apiRouter.use('/squad', authMiddleware, squadRoutes);
+apiRouter.use('/member', authMiddleware, memberRoutes);
+apiRouter.use('/nivel-cumplimiento', authMiddleware, nivelCumplimientoRoutes);
+apiRouter.use('/encuesta', authMiddleware, encuestaRoutes);
+apiRouter.use('/pregunta', authMiddleware, preguntaRoutes);
+apiRouter.use('/respuesta', authMiddleware, respuestaRoutes);
+apiRouter.use('/admin', authMiddleware, jwtMiddleware, adminRoutes);
+apiRouter.use('/auth', authMiddleware, authRoutes);
 
 app.use('/.netlify/functions/api', apiRouter);
 

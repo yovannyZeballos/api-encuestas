@@ -13,10 +13,10 @@ class PreguntaController {
                 where: { idEncuesta: id },
                 include: [{
                     model: Pregunta,
-                    as: 'preguntas',
+                    as: 'pregunta',
                     include: [{
                         model: Opcion,
-                        as: 'opciones'
+                        as: 'opcion'
                     }]
                 }]
             });
