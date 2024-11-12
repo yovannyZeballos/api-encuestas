@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+require('dotenv').config();
 
 // Opciones de SSL, ajusta las rutas de los certificados según sea necesario
 const sslOptions = {
@@ -10,10 +11,10 @@ const sslOptions = {
 };
 
 const pool = new Pool({
-  user: 'encuesta_owner',
-  host: 'ep-shy-paper-a59r25fa.us-east-2.aws.neon.tech',
-  database: 'encuesta',
-  password: '1xXLcsH9MDGe',
+  user: process.env.DB_USER,
+  host: process.env.DB_SERVER,
+  database: process.env.DB_DATABASE,
+  password: process.env.DB_PWD,
   port: 5432, // default PostgreSQL port
   ssl: sslOptions,
 });

@@ -1,8 +1,9 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config();
 
 // Configuración de la conexión
-const dbConnection = new Sequelize('encuesta', 'encuesta_owner', '1xXLcsH9MDGe', {
-  host: 'ep-shy-paper-a59r25fa.us-east-2.aws.neon.tech',
+const dbConnection = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, process.env.DB_PWD , {
+  host: process.env.DB_SERVER,
   schema: 'public',
   dialect: 'postgres',
   dialectOptions: {

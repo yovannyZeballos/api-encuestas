@@ -4,7 +4,7 @@
   "description": "A Node.js app with Express and PostgreSQL integration",
   "main": "src/app.js",
   "scripts": {
-    "build": "C:\\Users\\99100412\\AppData\\Roaming\\npm\\netlify deploy --prod",
+    "build": "netlify deploy --prod",
     "start": "node netlify/functions/api.js"
   },
   "dependencies": {
@@ -14,6 +14,8 @@
     "express": "^4.20.0",
     "jsonwebtoken": "^9.0.2",
     "moment-timezone": "^0.5.45",
+    "netlify-cli": "^17.37.2",
+    "netlify-lambda": "^2.0.16",
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.3",
