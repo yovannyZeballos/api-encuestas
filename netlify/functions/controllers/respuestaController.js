@@ -161,7 +161,7 @@ class RespuestaController {
             if (!respuesta) {
                 return res.status(404).json({ message: 'Respuesta no encontrada' });
             }
-            const preguntas= respuesta.respuestaDetalles.map(detalle => ({
+            const preguntas = respuesta.respuestaDetalles.map(detalle => ({
                 id: detalle.id,
                 numero: detalle.pregunta.numero,
                 descripcion: detalle.pregunta.descripcion,
@@ -174,7 +174,12 @@ class RespuestaController {
                 }))
             }));
 
-            res.status(200).json(preguntas);
+            res.status(200).json({
+                nombres: respuesta.nombres,
+                correo: respuesta.correo,
+                fecha: respuesta.fecha,
+                respuestas: preguntas
+            });
         } catch (error) {
             console.error('Error creating respuesta with details:', error);
             res.status(500).json({ message: 'Internal server error' });
