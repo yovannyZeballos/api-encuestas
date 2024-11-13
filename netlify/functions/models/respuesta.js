@@ -31,6 +31,10 @@ Respuesta.init({
     type: DataTypes.DATE,
     allowNull: false,
   },
+  dni: {
+    type: DataTypes.STRING(20),
+    allowNull: true,
+  }
 }, {
   sequelize: dbConnection,
   modelName: 'Respuesta',

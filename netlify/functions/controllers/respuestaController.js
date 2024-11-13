@@ -132,6 +132,54 @@ class RespuestaController {
             res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    async obtenerRespuestasPorDni(req, res) {
+        const { idEncuesta, dni  } = req.params;
+
+        try {
+            const respuesta = await Respuesta.findOne({where: { dni, idEncuesta }, 
+                include: [{
+                    model: RespuestaDetalle,
+                    as: 'respuestaDetalles',
+                    include: [
+                        {
+                            model: Pregunta,
+                            as: 'pregunta',
+                            include: [
+                                {
+                                    model: Opcion,
+                                    as: 'opcion'
+                                }
+                            ]
+                        }
+                    ]
+                }]
+            });
+            
+            console.log(respuesta);
+            
+            if (!respuesta) {
+                return res.status(404).json({ message: 'Respuesta no encontrada' });
+            }
+            const preguntas= respuesta.respuestaDetalles.map(detalle => ({
+                id: detalle.id,
+                numero: detalle.pregunta.numero,
+                descripcion: detalle.pregunta.descripcion,
+                opciones: detalle.pregunta.opcion.map(opcion => ({
+                    id: opcion.id,
+                    descripcion: opcion.descripcion,
+                    correcta: opcion.correcta,
+                    marcada: opcion.id === detalle.idOpcion,
+                    esCorrecta: opcion.correcta && opcion.id === detalle.idOpcion
+                }))
+            }));
+
+            res.status(200).json(preguntas);
+        } catch (error) {
+            console.error('Error creating respuesta with details:', error);
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }
 }
 
 module.exports = new RespuestaController();
