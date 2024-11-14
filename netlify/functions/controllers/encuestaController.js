@@ -65,6 +65,16 @@ class EncuestaController {
             res.status(500).send({ message: 'Internal server error' });
         }
     }
+
+    async listar(req, res) {
+        try {
+            const encuesta = await Encuesta.findAll();
+            res.json(encuesta);
+        } catch (error) {
+            console.error('Error al listar las encuestas:', error);
+            res.status(500).send({ message: 'Error al listar las encuestas' });
+        }
+    }
 }
 
 module.exports = new EncuestaController();
