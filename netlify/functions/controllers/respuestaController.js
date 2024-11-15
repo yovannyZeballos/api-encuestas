@@ -159,7 +159,7 @@ class RespuestaController {
             console.log(respuesta);
             
             if (!respuesta) {
-                return res.status(404).json({ message: 'Respuesta no encontrada' });
+                return res.status(404).json({ message: 'Evaluación no encontrada. Quizás ud no rindió la evaluación. Verifique su DNI o avise a su Chapter Lead' });
             }
             const preguntas = respuesta.respuestaDetalles.map(detalle => ({
                 id: detalle.id,
