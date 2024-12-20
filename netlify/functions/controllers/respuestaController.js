@@ -9,7 +9,7 @@ class RespuestaController {
         const t = await dbConnection.transaction();
         try {
 
-            const respuestaExistente = await Respuesta.findOne({ where: { correo: respuestaData.correo } });
+            const respuestaExistente = await Respuesta.findOne({ where: { correo: respuestaData.correo, idEncuesta: respuestaData.idEncuesta  } });
             if (respuestaExistente) {
                 return res.status(400).json({ message: 'Ya existe una respuesta con este correo' });
             }
@@ -43,7 +43,7 @@ class RespuestaController {
         });
     
         // Realizar la consulta principal
-        const respuestas = await Respuesta.findAll({
+        const respuestas = await Respuesta.findAll({where: { idEncuesta },
             attributes: [
                 'id',
                 'nombres',
